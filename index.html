@@ -31,6 +31,7 @@
             background-color: var(--background-color);
             color: var(--text-color);
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         #particle-canvas {
@@ -56,33 +57,64 @@
             }
         }
 
-
         .section-title {
             @apply text-3xl md:text-4xl font-bold text-center mb-12 text-white;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #a5b4fc);
+            border-radius: 2px;
         }
         
         .feature-card {
-            @apply bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 transition-all duration-300;
+            @apply bg-gradient-to-br from-gray-800/70 to-gray-900/70 backdrop-blur-sm p-6 rounded-xl border border-gray-700 transition-all duration-500;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.7s;
+        }
+        
+        .feature-card:hover::before {
+            left: 100%;
         }
         
         .feature-card:hover {
-            transform: translateY(-10px) rotate(1deg);
+            transform: translateY(-10px) scale(1.02);
             border-color: var(--primary-color);
-            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 15px 40px -10px rgba(59, 130, 246, 0.3);
         }
         
         .accordion-header {
-            @apply flex justify-between items-center w-full p-5 font-medium text-left text-gray-200 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg hover:bg-gray-700/60 transition-colors duration-300 cursor-pointer;
+            @apply flex justify-between items-center w-full p-5 font-medium text-left text-gray-200 bg-gradient-to-r from-gray-800/70 to-gray-900/70 backdrop-blur-sm border border-gray-700 rounded-lg hover:bg-gray-700/60 transition-all duration-300 cursor-pointer;
         }
         
         .accordion-item.active .accordion-header {
-            background-color: rgba(59, 130, 246, 0.1);
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
+            border-color: rgba(59, 130, 246, 0.5);
         }
 
         .accordion-content {
-            @apply bg-gray-800/30 p-5 border-x border-b border-gray-700 rounded-b-lg overflow-hidden transition-all duration-500 max-h-0;
+            @apply bg-gradient-to-b from-gray-800/30 to-gray-900/30 p-5 border-x border-b border-gray-700 rounded-b-lg overflow-hidden transition-all duration-500 max-h-0;
         }
 
         .accordion-item.active .accordion-content {
@@ -96,6 +128,142 @@
         .accordion-arrow {
             transition: transform 0.3s ease;
         }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translate(0, 0px); }
+            50% { transform: translate(0, 15px); }
+            100% { transform: translate(0, -0px); }
+        }
+        
+        .pulse-ring {
+            animation: pulse-ring 2s infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+            80%, 100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(45deg, #1f2937, #111827);
+            padding: 1px;
+            border-radius: 12px;
+        }
+        
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 12px;
+            padding: 2px;
+            background: linear-gradient(45deg, #3b82f6, #a5b4fc, #60a5fa);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .gradient-border:hover::before {
+            opacity: 1;
+        }
+        
+        .inner-content {
+            background: linear-gradient(to bottom right, #1f2937, #111827);
+            border-radius: 11px;
+            padding: 1.5rem;
+        }
+        
+        .typing-animation {
+            overflow: hidden;
+            border-right: 2px solid #3b82f6;
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #3b82f6 }
+        }
+        
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .stagger-animation > * {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .stagger-animation > *:nth-child(1) { animation-delay: 0.1s; }
+        .stagger-animation > *:nth-child(2) { animation-delay: 0.2s; }
+        .stagger-animation > *:nth-child(3) { animation-delay: 0.3s; }
+        .stagger-animation > *:nth-child(4) { animation-delay: 0.4s; }
+        .stagger-animation > *:nth-child(5) { animation-delay: 0.5s; }
+        .stagger-animation > *:nth-child(6) { animation-delay: 0.6s; }
+        
+        .telegram-icon {
+            animation: telegram-pulse 2s infinite;
+        }
+        
+        @keyframes telegram-pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -103,18 +271,23 @@
     <canvas id="particle-canvas"></canvas>
 
     <!-- Header -->
-    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-800">
+    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-800 transition-all duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                </svg>
+                <div class="telegram-icon bg-blue-500 p-2 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                    </svg>
+                </div>
                 <span class="text-xl font-bold text-white">E-commerce Guide</span>
             </div>
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#users" class="text-gray-300 hover:text-blue-500 transition-colors">For Users</a>
-                <a href="#admins" class="text-gray-300 hover:text-blue-500 transition-colors">For Admins</a>
-                <a href="#create-bot" class="text-gray-300 hover:text-blue-500 transition-colors">Create Your Bot</a>
+                <a href="#users" class="text-gray-300 hover:text-blue-500 transition-all duration-300 hover:scale-110">For Users</a>
+                <a href="#admins" class="text-gray-300 hover:text-blue-500 transition-all duration-300 hover:scale-110">For Admins</a>
+                <a href="#create-bot" class="text-gray-300 hover:text-blue-500 transition-all duration-300 hover:scale-110">Create Your Bot</a>
+            </div>
+            <div class="md:hidden">
+                <!-- Mobile menu button would go here -->
             </div>
         </nav>
     </header>
@@ -122,57 +295,122 @@
     <main class="container mx-auto px-6 py-16">
 
         <!-- Hero Section -->
-        <section class="text-center mb-24">
+        <section class="text-center mb-24 relative">
+            <div class="absolute -top-20 -left-20 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-20 -right-20 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl"></div>
+            
             <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4" data-aos="fade-up">Telegram E-commerce Bot</h1>
-            <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">The complete guide to mastering your bot, for both customers and administrators.</p>
+            <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-8" data-aos="fade-up" data-aos-delay="200">The complete guide to mastering your bot, for both customers and administrators.</p>
+            
+            <div class="flex justify-center space-x-4" data-aos="fade-up" data-aos-delay="400">
+                <a href="https://t.me/tg_ecommerce_official" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg">Join Channel</a>
+                <a href="https://t.me/tg_ecommerce_official_bot" class="px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg">Create Your Bot</a>
+            </div>
+            
+            <!-- Floating elements -->
+            <div class="absolute top-20 left-10 w-10 h-10 bg-blue-500/20 rounded-full floating" style="animation-delay: 0s;"></div>
+            <div class="absolute top-40 right-20 w-6 h-6 bg-purple-500/20 rounded-full floating" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-10 left-20 w-8 h-8 bg-indigo-500/20 rounded-full floating" style="animation-delay: 2s;"></div>
         </section>
 
         <!-- For Users Section -->
-        <section id="users" class="mb-24">
+        <section id="users" class="mb-24 relative">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl"></div>
+            
             <h2 class="section-title" data-aos="fade-up">For Users (Customers)</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-animation">
                 
                 <div class="feature-card" data-aos="fade-up">
-                    <h3 class="text-xl font-bold text-white mb-3">Main Menu & Navigation</h3>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Main Menu & Navigation</h3>
+                    </div>
                     <p>Start with /start. Easily navigate through Shopping, Promotions, Search, Cart, Orders, and your Profile from one central menu.</p>
                 </div>
 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="text-xl font-bold text-white mb-3">Browsing & Shopping</h3>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Browsing & Shopping</h3>
+                    </div>
                     <p>Explore products by category. View detailed product pages with photos, descriptions, and prices. Use the ➕ and ➖ buttons to select your desired quantity.</p>
                 </div>
 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="text-xl font-bold text-white mb-3">Cart & Checkout</h3>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Cart & Checkout</h3>
+                    </div>
                     <p>Add items to your cart or use 'Buy Now' to proceed directly. The bot checks if your phone and address are complete before you select a payment method.</p>
                 </div>
 
                 <div class="feature-card" data-aos="fade-up">
-                    <h3 class="text-xl font-bold text-white mb-3">Payment & Proof</h3>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
+                                <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Payment & Proof</h3>
+                    </div>
                     <p>After selecting a payment method, you'll see payment details and a QR code. After paying, press 'Transferred' and send your payment screenshot as proof.</p>
                 </div>
 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="text-xl font-bold text-white mb-3">Profile & Settings</h3>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Profile & Settings</h3>
+                    </div>
                     <p>Manage your contact info and shipping address in your Profile. In Settings, switch the language, view your affiliate stats, or read the T&C.</p>
                 </div>
 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="text-xl font-bold text-white mb-3">Orders & Support</h3>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.997 3.997 0 00.078-2.183l1.562-1.562C15.802 8.249 16 9.1 16 10zm-5.165 3.913l1.58 1.58A5.98 5.98 0 0110 16a5.976 5.976 0 01-2.516-.552l1.562-1.562a4.006 4.006 0 001.789.027zm-4.677-2.796a4.002 4.002 0 01-.041-2.08l-.08.08-1.53-1.533A5.98 5.98 0 004 10c0 .954.223 1.856.619 2.657l1.54-1.54zm1.088-6.45A5.974 5.974 0 0110 4c.954 0 1.856.223 2.657.619l-1.54 1.54a4.002 4.002 0 00-2.346.033L7.246 4.668zM12 10a2 2 0 11-4 0 2 2 0 014 0z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Orders & Support</h3>
+                    </div>
                     <p>Track your order history and status in 'My Orders'. For any help, use the 'Support' button to get contact information for the shop admin.</p>
                 </div>
             </div>
         </section>
         
         <!-- For Admins Section -->
-        <section id="admins" class="mb-24">
+        <section id="admins" class="mb-24 relative">
+            <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-500/5 rounded-full blur-3xl"></div>
+            
             <h2 class="section-title" data-aos="fade-up">For Admins (Shop Owners)</h2>
             <div class="space-y-4" data-aos="fade-up" id="accordion-container">
 
                 <!-- Accordion Item 1 -->
                 <div class="accordion-item">
                     <h3 class="accordion-header">
-                        <span>Admin Panel 1: Operations</span>
+                        <span class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
+                            </svg>
+                            Admin Panel 1: Operations
+                        </span>
                         <svg class="w-6 h-6 shrink-0 accordion-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </h3>
                     <div class="accordion-content">
@@ -189,7 +427,12 @@
                 <!-- Accordion Item 2 -->
                 <div class="accordion-item">
                     <h3 class="accordion-header">
-                        <span>Admin Panel 2: Shop Setup</span>
+                        <span class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
+                            </svg>
+                            Admin Panel 2: Shop Setup
+                        </span>
                         <svg class="w-6 h-6 shrink-0 accordion-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </h3>
                     <div class="accordion-content">
@@ -206,7 +449,12 @@
                 <!-- Accordion Item 3 -->
                 <div class="accordion-item">
                     <h3 class="accordion-header">
-                        <span>Admin Commands</span>
+                        <span class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
+                            </svg>
+                            Admin Commands
+                        </span>
                         <svg class="w-6 h-6 shrink-0 accordion-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </h3>
                     <div class="accordion-content">
@@ -221,20 +469,51 @@
         </section>
 
         <!-- How to get your own bot Section -->
-        <section id="create-bot" class="mb-24">
+        <section id="create-bot" class="mb-24 relative">
+            <div class="absolute -top-10 -right-10 w-40 h-40 bg-indigo-500/5 rounded-full blur-3xl"></div>
+            
             <h2 class="section-title" data-aos="fade-up">How to get your own E-commerce Bot?</h2>
-            <div class="max-w-4xl mx-auto bg-gray-800/50 backdrop-blur-sm p-8 rounded-xl border border-gray-700" data-aos="fade-up" data-aos-delay="100">
-                <ol class="list-decimal list-inside space-y-4 text-lg text-gray-300">
-                    <li>Go to <a href="https://t.me/BotFather" target="_blank" class="text-blue-400 hover:underline font-semibold">@BotFather</a> on Telegram.</li>
-                    <li>Send the <code>/newbot</code> command and follow the instructions.</li>
-                    <li>Provide a display name for your bot (e.g., "My Awesome Shop").</li>
-                    <li>Provide a unique username that must end with 'bot' (e.g., <code>MyAwesomeShopBot</code>). Special characters are not allowed.</li>
-                    <li>Once created, @BotFather will give you an API Token. Tap the token to copy it.</li>
-                    <li>Go to the official bot creator: <a href="https://t.me/tg_ecommerce_official_bot" target="_blank" class="text-blue-400 hover:underline font-semibold">@tg_ecommerce_official_bot</a>.</li>
-                    <li>Press the 'Create Your Bot' button.</li>
-                    <li>Paste and send the API Token you copied from @BotFather.</li>
-                    <li class="font-bold text-white pt-4">Congratulations! You now have your own E-commerce bot.</li>
-                </ol>
+            <div class="gradient-border max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                <div class="inner-content">
+                    <ol class="list-decimal list-inside space-y-4 text-lg text-gray-300">
+                        <li class="flex items-start">
+                            <span class="mr-2">1.</span>
+                            <span>Go to <a href="https://t.me/BotFather" target="_blank" class="text-blue-400 hover:underline font-semibold">@BotFather</a> on Telegram.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">2.</span>
+                            <span>Send the <code class="bg-gray-800 px-2 py-1 rounded">/newbot</code> command and follow the instructions.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">3.</span>
+                            <span>Provide a display name for your bot (e.g., "My Awesome Shop").</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">4.</span>
+                            <span>Provide a unique username that must end with 'bot' (e.g., <code class="bg-gray-800 px-2 py-1 rounded">MyAwesomeShopBot</code>). Special characters are not allowed.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">5.</span>
+                            <span>Once created, @BotFather will give you an API Token. Tap the token to copy it.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">6.</span>
+                            <span>Go to the official bot creator: <a href="https://t.me/tg_ecommerce_official_bot" target="_blank" class="text-blue-400 hover:underline font-semibold">@tg_ecommerce_official_bot</a>.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">7.</span>
+                            <span>Press the 'Create Your Bot' button.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">8.</span>
+                            <span>Paste and send the API Token you copied from @BotFather.</span>
+                        </li>
+                        <li class="flex items-start font-bold text-white pt-4">
+                            <span class="mr-2">🎉</span>
+                            <span>Congratulations! You now have your own E-commerce bot.</span>
+                        </li>
+                    </ol>
+                </div>
             </div>
         </section>
 
@@ -307,13 +586,17 @@
                     this.dy = dy;
                     this.radius = radius;
                     this.color = color;
+                    this.opacity = Math.random() * 0.5 + 0.2;
                 }
 
                 draw() {
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                    ctx.save();
+                    ctx.globalAlpha = this.opacity;
                     ctx.fillStyle = this.color;
                     ctx.fill();
+                    ctx.restore();
                 }
 
                 update() {
@@ -325,6 +608,12 @@
                     }
                     this.x += this.dx;
                     this.y += this.dy;
+                    
+                    // Add slight opacity variation for more dynamic effect
+                    if (Math.random() > 0.99) {
+                        this.opacity = Math.random() * 0.5 + 0.2;
+                    }
+                    
                     this.draw();
                 }
             }
@@ -338,7 +627,13 @@
                     let y = Math.random() * (innerHeight - radius * 2) + radius;
                     let dx = (Math.random() - 0.5) * 0.5;
                     let dy = (Math.random() - 0.5) * 0.5;
-                    particles.push(new Particle(x, y, dx, dy, radius, 'rgba(255, 255, 255, 0.3)'));
+                    let colors = [
+                        'rgba(59, 130, 246, 0.5)', // blue
+                        'rgba(139, 92, 246, 0.5)', // purple
+                        'rgba(99, 102, 241, 0.5)'  // indigo
+                    ];
+                    let color = colors[Math.floor(Math.random() * colors.length)];
+                    particles.push(new Particle(x, y, dx, dy, radius, color));
                 }
             }
             
@@ -350,7 +645,7 @@
                                      ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
                         if (distance < (canvas.width / 7) * (canvas.height / 7)) {
                             opacityValue = 1 - (distance / 20000);
-                            ctx.strokeStyle = `rgba(59, 130, 246, ${opacityValue * 0.5})`;
+                            ctx.strokeStyle = `rgba(59, 130, 246, ${opacityValue * 0.3})`;
                             ctx.lineWidth = 1;
                             ctx.beginPath();
                             ctx.moveTo(particles[a].x, particles[a].y);
@@ -379,8 +674,13 @@
             resizeCanvas();
             initParticles();
             animate();
+            
+            // Add typing animation to hero subtitle
+            const heroSubtitle = document.querySelector('.text-lg.md\\:text-xl');
+            if (heroSubtitle) {
+                heroSubtitle.classList.add('typing-animation');
+            }
         });
     </script>
 </body>
 </html>
-
