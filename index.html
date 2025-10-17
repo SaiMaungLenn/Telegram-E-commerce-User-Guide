@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram E-commerce User Guide</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Animate on Scroll (AOS) for animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS and Tailwind Configuration -->
+    <style>
+        :root {
+            --primary-color: #3b82f6; /* Blue 500 */
+            --secondary-color: #1f2937; /* Gray 800 */
+            --background-color: #111827; /* Gray 900 */
+            --text-color: #d1d5db; /* Gray 300 */
+            --header-text-color: #ffffff;
+        }
+
+        @keyframes animated-gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(-45deg, #0f172a, #111827, #1e293b, #0c4a6e);
+            background-size: 400% 400%;
+            animation: animated-gradient 25s ease infinite;
+            color: var(--text-color);
+            scroll-behavior: smooth;
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        h1 {
+            background: linear-gradient(90deg, #ffffff, #a5b4fc, #60a5fa, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: animated-text-gradient 8s linear infinite;
+        }
+
+        @keyframes animated-text-gradient {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+
+        .section-title {
+            @apply text-3xl md:text-4xl font-bold text-center mb-12 text-white;
+        }
+        
+        .feature-card {
+            @apply bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 transition-all duration-300;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px) rotate(1deg);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.2);
+        }
+        
+        .accordion-header {
+            @apply flex justify-between items-center w-full p-5 font-medium text-left text-gray-200 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg hover:bg-gray-700/60 transition-colors duration-300 cursor-pointer;
+        }
+        
+        .accordion-item.active .accordion-header {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .accordion-content {
+            @apply bg-gray-800/30 p-5 border-x border-b border-gray-700 rounded-b-lg overflow-hidden transition-all duration-500 max-h-0;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 1000px;
+        }
+        
+        .accordion-item.active .accordion-arrow {
+            transform: rotate(180deg);
+        }
+
+        .accordion-arrow {
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Header -->
+    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-800">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                </svg>
+                <span class="text-xl font-bold text-white">E-commerce Guide</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#users" class="text-gray-300 hover:text-blue-500 transition-colors">For Users</a>
+                <a href="#admins" class="text-gray-300 hover:text-blue-500 transition-colors">For Admins</a>
+                <a href="#create-bot" class="text-gray-300 hover:text-blue-500 transition-colors">Create Your Bot</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-16">
+
+        <!-- Hero Section -->
+        <section class="text-center mb-24">
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4" data-aos="fade-up">Telegram E-commerce Bot</h1>
+            <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">The complete guide to mastering your bot, for both customers and administrators.</p>
+        </section>
+
+        <!-- For Users Section -->
+        <section id="users" class="mb-24">
+            <h2 class="section-title" data-aos="fade-up">For Users (Customers)</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="feature-card" data-aos="fade-up">
+                    <h3 class="text-xl font-bold text-white mb-3">Main Menu & Navigation</h3>
+                    <p>Start with /start. Easily navigate through Shopping, Promotions, Search, Cart, Orders, and your Profile from one central menu.</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-bold text-white mb-3">Browsing & Shopping</h3>
+                    <p>Explore products by category. View detailed product pages with photos, descriptions, and prices. Use the ➕ and ➖ buttons to select your desired quantity.</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl font-bold text-white mb-3">Cart & Checkout</h3>
+                    <p>Add items to your cart or use 'Buy Now' to proceed directly. The bot checks if your phone and address are complete before you select a payment method.</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up">
+                    <h3 class="text-xl font-bold text-white mb-3">Payment & Proof</h3>
+                    <p>After selecting a payment method, you'll see payment details and a QR code. After paying, press 'Transferred' and send your payment screenshot as proof.</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-bold text-white mb-3">Profile & Settings</h3>
+                    <p>Manage your contact info and shipping address in your Profile. In Settings, switch the language, view your affiliate stats, or read the T&C.</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl font-bold text-white mb-3">Orders & Support</h3>
+                    <p>Track your order history and status in 'My Orders'. For any help, use the 'Support' button to get contact information for the shop admin.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- For Admins Section -->
+        <section id="admins" class="mb-24">
+            <h2 class="section-title" data-aos="fade-up">For Admins (Shop Owners)</h2>
+            <div class="space-y-4" data-aos="fade-up" id="accordion-container">
+
+                <!-- Accordion Item 1 -->
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <span>Admin Panel 1: Operations</span>
+                        <svg class="w-6 h-6 shrink-0 accordion-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </h3>
+                    <div class="accordion-content">
+                        <ul class="space-y-2 list-disc list-inside text-gray-400">
+                            <li>Manage Orders: View pending orders, see customer payment proof, and approve or reject payments with a single tap. Customers are notified automatically.</li>
+                            <li>Broadcast Message: Send announcements or marketing messages (text, photos, videos) to all of your bot's users at once.</li>
+                            <li>Update Content: Easily update the content for your 'Promotions' and 'News' sections by sending new messages to the bot.</li>
+                            <li>Customize Appearance: Update all captions and poster photos for every section to match your brand's unique style.</li>
+                            <li>Manage Admins & Users: Add or remove other admins. View and block/unblock users from sending support messages.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Accordion Item 2 -->
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <span>Admin Panel 2: Shop Setup</span>
+                        <svg class="w-6 h-6 shrink-0 accordion-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </h3>
+                    <div class="accordion-content">
+                       <ul class="space-y-2 list-disc list-inside text-gray-400">
+                            <li>Add Category & Product: A guided, step-by-step flow to add new categories and products, including name, price, description, and media.</li>
+                            <li>Set Currency: Before adding your first product, you must set your shop's currency (e.g., MMK, USD). This is a one-time, permanent setting.</li>
+                            <li>Manage Payments: Add or remove payment methods your customers can use. Provide a name, number, and an optional QR code for each.</li>
+                            <li>Delete Content: Safely delete products or entire categories. Deleting a category will also delete all products within it, with a confirmation prompt.</li>
+                            <li>Custom Commands: Create unique slash commands (e.g., /aboutus, /policy) and define the content the bot should reply with.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Accordion Item 3 -->
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <span>Admin Commands</span>
+                        <svg class="w-6 h-6 shrink-0 accordion-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </h3>
+                    <div class="accordion-content">
+                       <ul class="space-y-2 list-disc list-inside text-gray-400">
+                            <li><strong>/statistics</strong> - Get a real-time, detailed report of your shop's performance, including revenue, order counts, user growth, and top-selling products.</li>
+                            <li><strong>/myusers</strong> - See a list of all users who joined the bot via your referral link, and view the bots they have created on the platform.</li>
+                       </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- How to get your own bot Section -->
+        <section id="create-bot" class="mb-24">
+            <h2 class="section-title" data-aos="fade-up">How to get your own E-commerce Bot?</h2>
+            <div class="max-w-4xl mx-auto bg-gray-800/50 backdrop-blur-sm p-8 rounded-xl border border-gray-700" data-aos="fade-up" data-aos-delay="100">
+                <ol class="list-decimal list-inside space-y-4 text-lg text-gray-300">
+                    <li>Go to <a href="https://t.me/BotFather" target="_blank" class="text-blue-400 hover:underline font-semibold">@BotFather</a> on Telegram.</li>
+                    <li>Send the <code>/newbot</code> command and follow the instructions.</li>
+                    <li>Provide a display name for your bot (e.g., "My Awesome Shop").</li>
+                    <li>Provide a unique username that must end with 'bot' (e.g., <code>MyAwesomeShopBot</code>). Special characters are not allowed.</li>
+                    <li>Once created, @BotFather will give you an API Token. Tap the token to copy it.</li>
+                    <li>Go to the official bot creator: <a href="https://t.me/tg_ecommerce_official_bot" target="_blank" class="text-blue-400 hover:underline font-semibold">@tg_ecommerce_official_bot</a>.</li>
+                    <li>Press the 'Create Your Bot' button.</li>
+                    <li>Paste and send the API Token you copied from @BotFather.</li>
+                    <li class="font-bold text-white pt-4">Congratulations! You now have your own E-commerce bot.</li>
+                </ol>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-gray-800 mt-16">
+        <div class="container mx-auto px-6 py-6 text-center text-gray-500">
+            <p>Telegram E-commerce Bot Platform</p>
+        </div>
+    </footer>
+
+    <!-- AOS Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Animate on Scroll
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 50,
+            });
+
+            // --- Accordion Logic ---
+            const accordionContainer = document.getElementById('accordion-container');
+            if (accordionContainer) {
+                const accordionItems = accordionContainer.querySelectorAll('.accordion-item');
+                accordionItems.forEach(item => {
+                    const header = item.querySelector('.accordion-header');
+                    header.addEventListener('click', () => {
+                        const isActive = item.classList.contains('active');
+                        // Close all items
+                        accordionItems.forEach(otherItem => {
+                            otherItem.classList.remove('active');
+                        });
+                        // Toggle the clicked item only if it wasn't already active
+                        if (!isActive) {
+                           item.classList.add('active');
+                        }
+                    });
+                });
+            }
+            
+            // --- Smooth Scrolling Logic ---
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // --- Particle Animation Logic ---
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            class Particle {
+                constructor(x, y, dx, dy, radius, color) {
+                    this.x = x;
+                    this.y = y;
+                    this.dx = dx;
+                    this.dy = dy;
+                    this.radius = radius;
+                    this.color = color;
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+
+                update() {
+                    if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+                        this.dx = -this.dx;
+                    }
+                    if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+                        this.dy = -this.dy;
+                    }
+                    this.x += this.dx;
+                    this.y += this.dy;
+                    this.draw();
+                }
+            }
+
+            function initParticles() {
+                particles = [];
+                let numberOfParticles = (canvas.height * canvas.width) / 9000;
+                for (let i = 0; i < numberOfParticles; i++) {
+                    let radius = Math.random() * 1.5 + 1;
+                    let x = Math.random() * (innerWidth - radius * 2) + radius;
+                    let y = Math.random() * (innerHeight - radius * 2) + radius;
+                    let dx = (Math.random() - 0.5) * 0.5;
+                    let dy = (Math.random() - 0.5) * 0.5;
+                    particles.push(new Particle(x, y, dx, dy, radius, 'rgba(255, 255, 255, 0.2)'));
+                }
+            }
+            
+            function connectParticles() {
+                let opacityValue = 1;
+                for (let a = 0; a < particles.length; a++) {
+                    for (let b = a; b < particles.length; b++) {
+                        let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x)) +
+                                     ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
+                        if (distance < (canvas.width / 7) * (canvas.height / 7)) {
+                            opacityValue = 1 - (distance / 20000);
+                            ctx.strokeStyle = `rgba(100, 150, 255, ${opacityValue})`;
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[a].x, particles[a].y);
+                            ctx.lineTo(particles[b].x, particles[b].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                }
+                connectParticles();
+            }
+            
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+                initParticles();
+            });
+
+            resizeCanvas();
+            initParticles();
+            animate();
+        });
+    </script>
+</body>
+</html>
+
