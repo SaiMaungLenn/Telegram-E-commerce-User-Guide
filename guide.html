@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram E-commerce Bot Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles and animations */
+        :root {
+            --bg-color: #111827;
+            --card-color: #1f2937;
+            --border-color: #374151;
+            --text-color: #d1d5db;
+            --primary-color: #3b82f6;
+            --primary-hover: #2563eb;
+            --accent-color: #4f46e5;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', 'Padauk', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .lang-en .lang-my,
+        .lang-my .lang-en {
+            display: none;
+        }
+        
+        .lang-my .lang-my,
+        .lang-en .lang-en {
+            display: block;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 2000px; /* Adjust as needed */
+        }
+        
+        .accordion-button .icon {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-button .icon {
+            transform: rotate(45deg);
+        }
+
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-glow {
+            box-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+        }
+    </style>
+</head>
+<body class="lang-my">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+        <!-- Header -->
+        <header class="text-center mb-10 md:mb-16 scroll-animate">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-3">
+                <span class="lang-my">Telegram E-commerce Bot လမ်းညွှန်</span>
+                <span class="lang-en">Telegram E-commerce Bot Guide</span>
+            </h1>
+            <p class="text-lg text-gray-400">
+                <span class="lang-my">သင့်ရဲ့ Bot ကို စီမံခန့်ခွဲရန်နှင့် အသုံးပြုရန် အသေးစိတ်လမ်းညွှန်</span>
+                <span class="lang-en">Your detailed guide to setting up and using your bot</span>
+            </p>
+            <button id="lang-switcher" class="mt-6 px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 transform hover:scale-105 btn-glow">
+                English
+            </button>
+        </header>
+
+        <!-- Main Content Sections -->
+        <main>
+            <!-- Admin Section -->
+            <section class="mb-12 scroll-animate">
+                <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-blue-500 text-white">
+                    <span class="lang-my">Admin Section</span>
+                    <span class="lang-en">Admin Section</span>
+                </h2>
+                <div class="space-y-4">
+                    <!-- Accordion Item: Create Bot -->
+                    <div class="accordion-item bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700">
+                        <button class="accordion-button w-full text-left p-5 flex justify-between items-center hover:bg-gray-700 transition-colors duration-200">
+                            <span class="font-semibold text-lg text-white">
+                                <span class="lang-my">ကိုယ်ပိုင် E-commerce Bot ကိုဘယ်လိုရယူနိုင်မလဲ။</span>
+                                <span class="lang-en">How to Get Your Own E-commerce Bot?</span>
+                            </span>
+                            <span class="icon text-2xl text-blue-400">+</span>
+                        </button>
+                        <div class="accordion-content px-5 pb-5 text-gray-300">
+                            <div class="prose prose-invert max-w-none">
+                                <ol class="list-decimal pl-5 space-y-2">
+                                    <li>
+                                        <span class="lang-my">t.me/BotFather ကိုသွားပါ။</span>
+                                        <span class="lang-en">Go to t.me/BotFather.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-my">ဘယ်ဘက်အောက်ဆုံးက Open ကိုနှိပ်ပါ။</span>
+                                        <span class="lang-en">Click "Start" or type `/start`.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-my">Create a New Bot ကိုနှိပ်ပါ။</span>
+                                        <span class="lang-en">Select "Create a New Bot".</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-my">Bot Name မှာ နှစ်သက်ရာ နာမည်ပေးပါ။</span>
+                                        <span class="lang-en">Give your bot a name you like.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-my">username_bot ဆိုတဲ့နေရာမှာ username တစ်ခုပေးပြီး bot ဆိုတဲ့ နဲ့အဆုံးသက်ရပါမယ်။ အကယ်၍ တစ်ခြားသူတွေ သုံးပြီးသား username ဆိုရင်မရပါဘူး။ special characters မရပါဘူး။</span>
+                                        <span class="lang-en">Choose a username for your bot, ending with "bot" (e.g., `username_bot`). It must be unique and cannot contain special characters.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-my">Create Bot ကိုနှိပ်ပါ။</span>
+                                        <span class="lang-en">Click "Create Bot".</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-my">Copy ကိုနှိပ်ပြီး copy ယူထားပါ။ (You will get a token, copy it)</span>
+                                        <span class="lang-en">You will get an API token. Tap to copy it.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-my">t.me/tg_ecommerce_official_bot ကိုသွားပါ။</span>
+                                        <span class="lang-en">Go to t.me/tg_ecommerce_official_bot.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-my">Create Your Bot ကိုနှိပ်ပါ။</span>
+                                        <span class="lang-en">Click "Create Your Bot".</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-my">copy ယူထားတာကို ပို့လိုက်ပါ။</span>
+                                        <span class="lang-en">Paste the token you copied and send it.</span>
+                                    </li>
+                                </ol>
+                                <p class="mt-4 font-semibold">
+                                    <span class="lang-my">ဒါဆိုရင် သင့်ရဲ့ကိုယ်ပိုင် E-commerce bot တစ်ခုကို ပိုင်ဆိုင်နိုင်ပါပြီ။</span>
+                                    <span class="lang-en">Congratulations! You now own your E-commerce bot.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Other Admin Accordions... -->
+                    <div class="accordion-item bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700">
+                        <button class="accordion-button w-full text-left p-5 flex justify-between items-center hover:bg-gray-700 transition-colors duration-200">
+                            <span class="font-semibold text-lg text-white">
+                                <span class="lang-my">Admin Panel ဆိုတာဘာလဲ။</span>
+                                <span class="lang-en">What is the Admin Panel?</span>
+                            </span>
+                             <span class="icon text-2xl text-blue-400">+</span>
+                        </button>
+                        <div class="accordion-content px-5 pb-5 text-gray-300">
+                             <div class="prose prose-invert max-w-none space-y-3">
+                                <p><strong><span class="lang-my">Manage Order:</span><span class="lang-en">Manage Order:</span></strong> <span class="lang-my">Customer တွေ Order တင်ထားတဲ့ Order တွေကို စီစစ်ဖို့နဲ့ Confirm ဖို့ဖြစ်ပါတယ်။</span><span class="lang-en">To review and confirm orders placed by customers.</span></p>
+                                <p><strong><span class="lang-my">Broadcast Message:</span><span class="lang-en">Broadcast Message:</span></strong> <span class="lang-my">ကိုယ့်ရဲ့ E-commerce bot အသုံးပြုသူအားလုံးကို Message ပို့တာဖြစ်ပါတယ်။ ကြော်ငြာစရာရှိတာ၊ အသိပေးစရာရှိတာ၊ ပစ္စည်းအသစ်မိတ်ဆက်ချင်တဲ့အခါ အသုံးပြုနိုင်ပါတယ်။</span><span class="lang-en">Send a message to all users of your E-commerce bot. Useful for announcements, promotions, or new product introductions.</span></p>
+                                <p><strong><span class="lang-my">Update Promo/News:</span><span class="lang-en">Update Promo/News:</span></strong> <span class="lang-my">Promotion နဲ့ News က အတူတူဖြစ်ပါတယ်။ Facebook post နဲ့ပုံစံတူပါတယ်။ ကိုယ်တင်ထားတဲ့ post ကို user တွေ ကြည့်တဲ့အခါ ပြန်ပြပေးပါတယ်။</span><span class="lang-en">This is for creating posts similar to Facebook. Users can view these posts to see current promotions and news.</span></p>
+                                <p><strong><span class="lang-my">Update Caption:</span><span class="lang-en">Update Caption:</span></strong> <span class="lang-my">welcome message, support message, about message, စတဲ့ခလုပ်တွေရဲ့ captions ကိုပြောင်းလဲဖို့ဖြစ်ပါတယ်။ မပြောင်းလဲဘူးဆို‌ရင်တော့ Default Captions ပဲပြနေမှာပါ။</span><span class="lang-en">To change the text for buttons like welcome message, support, and about. If not changed, default captions will be shown.</span></p>
+                                <p><strong><span class="lang-my">Update Photo:</span><span class="lang-en">Update Photo:</span></strong> <span class="lang-my">Default Photo တွေကို ကိုယ်ပိုင်ပုံတွေနဲ့အစားထိုးဖို့ဖြစ်ပါတယ်။ ဥပမာ သင်က main menu photo ကို update လုပ်မယ်ဆိုရင် အဲ့ပုံကိုပဲ နောက်ပိုင်းပဲပြပေးတော့မှာဖြစ်ပါတယ်။</span><span class="lang-en">To replace default photos with your own images, such as for the main menu photo.</span></p>
+                                <p><strong><span class="lang-my">Manage Blocked Users:</span><span class="lang-en">Manage Blocked Users:</span></strong> <span class="lang-my">သင် Block ထားတဲ့သူတွေကို Unblock ပြန်လုပ်ဖို့ဖြစ်ပါတယ်။ တကယ်လို့သင်က user တစ်ယောက်ကို block မယ်ဆိုရင် အဲ့ user ဆီက message တွေဝင်တော့မှာမဟုတ်ပါဘူး။</span><span class="lang-en">To unblock users you have previously blocked. A blocked user cannot send messages to your bot.</span></p>
+                                <p><strong><span class="lang-my">Manage Admins:</span><span class="lang-en">Manage Admins:</span></strong> <span class="lang-my">ကိုယ့်ရဲ့ E-commerce bot ကို ဝန်ထမ်း သို့မဟုတ် အသိတစ်ယောက်ယောက်ကို admin အနေနဲ့ထပ်ထည့်ဖို့ဖြစ်ပါတယ်။ Forward method သို့မဟုတ် Generate Key နည်းလမ်းနဲ့ထည့်နိုင်ပါတယ်။ Admin လုပ်မယ့်သူက bot ကိုတစ်ကြိမ်ဝင်ထားဖူးသူဖြစ်ရပါမယ်။</span><span class="lang-en">Add or remove other admins for your bot. You can add them via the Forward method or by generating a key. The new admin must have started your bot at least once.</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700">
+                        <button class="accordion-button w-full text-left p-5 flex justify-between items-center hover:bg-gray-700 transition-colors duration-200">
+                             <span class="font-semibold text-lg text-white">
+                                <span class="lang-my">Admin Panel 2 - Products & Commands</span>
+                                <span class="lang-en">Admin Panel 2 - Products & Commands</span>
+                            </span>
+                             <span class="icon text-2xl text-blue-400">+</span>
+                        </button>
+                        <div class="accordion-content px-5 pb-5 text-gray-300">
+                            <div class="prose prose-invert max-w-none">
+                                <h4 class="font-bold text-white"><span class="lang-my">ကိုယ့်ရဲ့ product ကို ဘယ်လိုထည့်မလဲ။</span><span class="lang-en">How to add your product?</span></h4>
+                                <ol class="list-decimal pl-5 space-y-2">
+                                    <li><span class="lang-my">Admin Panel 2 ကိုသွားပါ။</span><span class="lang-en">Go to Admin Panel 2.</span></li>
+                                    <li><span class="lang-my">Set Currency ကိုနှိပ်ပြီး ငွေကြေးရွေးချယ်ပါ။</span><span class="lang-en">Click "Set Currency" and choose your currency.</span></li>
+                                    <li><span class="lang-my">Manage Payment ကိုနှိပ်ပါ၊ Add Payment ကိုနှိပ်ပြီး bot ကခိုင်းတဲ့အတိုင်းထည့်ပါ။</span><span class="lang-en">Go to "Manage Payment", click "Add Payment", and follow the bot's instructions to add payment details (name, number, QR code).</span></li>
+                                    <li><span class="lang-my">Add Category ကိုနှိပ်ပြီး Category name ပေးပါ။ (ဥပမာ: Fashion)</span><span class="lang-en">Click "Add Category" to create a category first (e.g., Fashion).</span></li>
+                                    <li><span class="lang-my">Add Product ကိုနှိပ်ပြီး Category တစ်ခုကိုရွေးချယ်ပါ။ ကျန်တာ bot က ပြောတဲ့အတိုင်းဆက်လုပ်ပါ။</span><span class="lang-en">Click "Add Product", select a category, and follow the bot's instructions to add product details.</span></li>
+                                </ol>
+                                <p class="mt-4"><span class="lang-my">နောက်ထပ် ပစ္စည်းထပ်တိုးတင်ချင်ရင်တော့ Add Product ကိုနှိပ်ပြီး အလျင်အမြန်ထည့်လို့ရပါပြီ။</span><span class="lang-en">For subsequent products, you can just use "Add Product" to add them quickly.</span></p>
+
+                                <h4 class="font-bold mt-4 text-white"><span class="lang-my">Delete Other Content ဆိုတာဘာလဲ။</span><span class="lang-en">What is Delete Other Content?</span></h4>
+                                <p><span class="lang-my">Admin Panel 2 အောက်မှာရှိတဲ့ Delete Other Content ဆိုတာ ကိုယ်တင်ထားတဲ့ ပစ္စည်းတွေကို ရွေးချယ်ပြီးဖျက်ဖို့ဖြစ်ပါတယ်။</span><span class="lang-en">It allows you to select and delete items (products, categories, etc.) that you have added.</span></p>
+
+                                <h4 class="font-bold mt-4 text-white"><span class="lang-my">Manage Command ဆိုတာဘာလဲ။</span><span class="lang-en">What is Manage Command?</span></h4>
+                                <p><span class="lang-my">ကိုယ်ပိုင် automation question and answer သတ်မှတ်တာဖြစ်ပါတယ်။ Customers တွေရဲ့ အမေးအဖြေတွေကို admin မလိုပဲ ကြိုတင်သတ်မှတ်ထားရုံနဲ့ 24/7 ဖြေဆိုပေးသွားမှာဖြစ်ပါတယ်။</span><span class="lang-en">Set up automated questions and answers. It can reply to customer queries 24/7 without needing an admin.</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Customer Section -->
+             <section class="mb-12 scroll-animate">
+                <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-green-500 text-white">
+                    <span class="lang-my">Customers Section</span>
+                    <span class="lang-en">Customers Section</span>
+                </h2>
+                <div class="space-y-4">
+                     <div class="accordion-item bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700">
+                        <button class="accordion-button w-full text-left p-5 flex justify-between items-center hover:bg-gray-700 transition-colors duration-200">
+                            <span class="font-semibold text-lg text-white">
+                                <span class="lang-my">Customer Features</span>
+                                <span class="lang-en">Customer Features</span>
+                            </span>
+                             <span class="icon text-2xl text-green-400">+</span>
+                        </button>
+                        <div class="accordion-content px-5 pb-5 text-gray-300">
+                             <div class="prose prose-invert max-w-none space-y-3">
+                                <p><strong><span class="lang-my">ပစ္စည်း‌ဘယ်လိုဝယ်မလဲ:</span><span class="lang-en">How to buy an item:</span></strong> <span class="lang-my">Main Menu ကနေ Shopping ကိုရွေးပြီး ဝယ်ချင်တဲ့ပစ္စည်းနဲ့ အရေအတွက်ကို ➕/➖ ခလုပ်နဲ့ ရွေးဝယ်ပါ။ Profile Information ဖြည့်ထားဖို့လိုအပ်ပါတယ်။</span><span class="lang-en">Go to Main Menu, select "Shopping", choose an item, and use the ➕/➖ buttons to set the quantity. You must complete your Profile Information first.</span></p>
+                                <p><strong><span class="lang-my">ကိုယ့်ရဲ့ Profile ကိုဘယ်လိုပြင်ဆင်မလဲ:</span><span class="lang-en">How to edit your Profile:</span></strong> <span class="lang-my">Main Menu ကိုသွားပါ Profile ဆိုတဲ့ ခလုပ်ကိုနှိပ်ပြီး စိတ်ကြိုက်ပြင်ဆင်နိုင်ပါတယ်။</span><span class="lang-en">Go to the Main Menu and click the "Profile" button to edit your details.</span></p>
+                                <p><strong><span class="lang-my">Promotion:</span><span class="lang-en">Promotion:</span></strong> <span class="lang-my">ဘာတွေ Discount ပေးနေလဲဆိုတာ ကြည့်ဖို့ဖြစ်ပါတယ်။</span><span class="lang-en">Check for current discounts and promotional offers.</span></p>
+                                <p><strong><span class="lang-my">News:</span><span class="lang-en">News:</span></strong> <span class="lang-my">ဘာသတင်းဘာထူးခြားတွေတင်ထားလဲဆိုတာဝင်ကြည့်ဖို့ဖြစ်ပါတယ်။</span><span class="lang-en">View the latest news and announcements from the shop.</span></p>
+                                <p><strong><span class="lang-my">Search:</span><span class="lang-en">Search:</span></strong> <span class="lang-my">ကိုယ်လိုချင်တဲ့ ပစ္စည်းတွေကို နာမည်ရိုက်ရှာပြီး အလွယ်တကူ ရှာဖွေနိုင်ပါတယ်။</span><span class="lang-en">Easily find items by typing their names.</span></p>
+                                <p><strong><span class="lang-my">View Cart:</span><span class="lang-en">View Cart:</span></strong> <span class="lang-my">ကိုယ်ဈေးခြင်းတောင်းထဲစုစည်းထားတဲ့ကုန်ပစ္စည်းအားလုံးကို Check Out လုပ်ဖို့ဖြစ်ပါတယ်။</span><span class="lang-en">Review all items in your shopping cart and proceed to checkout.</span></p>
+                                <p><strong><span class="lang-my">My Orders:</span><span class="lang-en">My Orders:</span></strong> <span class="lang-my">သင်ဝယ်ထားတဲ့ ကုန်ပစ္စည်းတွေရဲ့ မှတ်တမ်းဖြစ်ပါတယ်။</span><span class="lang-en">View a history of your past orders.</span></p>
+                                <p><strong><span class="lang-my">Support and About:</span><span class="lang-en">Support and About:</span></strong> <span class="lang-my">ဈေးဆိုင်ရဲ့ အချက်အလက်တွေဖြစ်ပါတယ်။</span><span class="lang-en">Find information about the shop and contact details for support.</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Affiliate Section -->
+             <section class="mb-12 scroll-animate">
+                <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-purple-500 text-white">
+                    <span class="lang-my">Affiliate Program</span>
+                    <span class="lang-en">Affiliate Program</span>
+                </h2>
+                <div class="space-y-4">
+                     <div class="accordion-item bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700">
+                        <button class="accordion-button w-full text-left p-5 flex justify-between items-center hover:bg-gray-700 transition-colors duration-200">
+                             <span class="font-semibold text-lg text-white">
+                                <span class="lang-my">Affiliate Program အသေးစိတ်</span>
+                                <span class="lang-en">Affiliate Program Details</span>
+                            </span>
+                             <span class="icon text-2xl text-purple-400">+</span>
+                        </button>
+                        <div class="accordion-content px-5 pb-5 text-gray-300">
+                             <div class="prose prose-invert max-w-none">
+                                <p><span class="lang-my">Affiliate Program ကို Admin ရော Customer ရော အားလုံးအတွက် အကျိုးရှိပါတယ်။</span><span class="lang-en">The Affiliate Program benefits both Admins and Customers.</span></p>
+                                
+                                <h4 class="font-bold mt-4 text-white"><span class="lang-my">ဘယ်လိုအလုပ်လုပ်သလဲ</span><span class="lang-en">How It Works</span></h4>
+                                <p><span class="lang-my">User တိုင်း ကိုယ်ပိုင် link တစ်ခုရရှိမှာဖြစ်ပါတယ်။ (/share command သုံးပြီးလဲကြည့်နိုင်ပါတယ်)။ Telegram Users အသစ်တွေက သင့်ရဲ့ link ကနေတစ်ဆင့်ဝင်ပြီး Bot ကို join လာတဲ့သူမှန်သမျှဟာ သင့်ရဲ့ users တွေအဖြစ် သတ်မှတ်မှာဖြစ်ပါတယ်။</span><span class="lang-en">Every user gets a unique referral link (use the `/share` command to see yours). Any new Telegram user who joins the bot through your link will be counted as your referred user.</span></p>
+                                <p><span class="lang-my">တကယ်လို့ အဲ့ဒီ users တွေထဲကတစ်ယောက်က Bot တစ်ခုရယူပြီး Upgrade လုပ်မယ်ဆိုရင် Upgrade လုပ်လိုက်တဲ့ Plan ရဲ့ 10% ကို commission fees အနေနဲ့ ရရှိမှာဖြစ်ပါတယ်။</span><span class="lang-en">If one of your referred users gets a bot and upgrades to a paid plan, you will receive a 10% commission fee from their upgrade payment.</span></p>
+                                <p><span class="lang-my">သင်ရဲ့ referred users lists ကိုကြည့်ဖို့ /myusers command သုံးပါ။</span><span class="lang-en">Use the `/myusers` command to see your list of referred users.</span></p>
+
+                                <h4 class="font-bold mt-4 text-white"><span class="lang-my">စည်းကမ်းများ</span><span class="lang-en">Rules</span></h4>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li><span class="lang-my">တကယ်လို့ Users က သင့်ရဲ့ link ကနေဝင်သော်လည်း၊ သင့် link ကိုမဝင်ခင်အရင်ကတည်းက Bot ကို စပြီးသားဆိုရင်တော့ အကျိုးဝင်မှာမဟုတ်ပါ။</span><span class="lang-en">If a user clicks your link but has already started the bot before, they will not be counted as your referral.</span></li>
+                                    <li><span class="lang-my">တကယ်လို့ သင့် Referral Link ကနေဝင်သော်လည်း၊ တစ်ခြားတစ်စုံတစ်ယောက်ရဲ့ link ကနေဝင်ခဲ့ဖူးတဲ့ဖြစ်မယ်ဆိုရင်လဲ အကျိုးမဝင်ပါ။ ထိုသူကိုပထမဆုံးသူကသာ ပိုင်ဆိုင်ပါမည်။</span><span class="lang-en">If a user has clicked someone else's referral link before yours, they will belong to the first referrer.</span></li>
+                                </ul>
+
+                                <h4 class="font-bold mt-4 text-white"><span class="lang-my">Commission Fees</span><span class="lang-en">Commission Fees</span></h4>
+                                <p><span class="lang-my">Commission Fees ကို လကုန်ပြီး 5ရက်အတွင်းမှာ စီစစ်ပြီး ဆက်သွယ်ပြီး ပေးချေသွားမှာဖြစ်ပါတယ်။</span><span class="lang-en">Commission fees will be calculated and paid out within 5 days after the end of the month.</span></p>
+                                <p class="italic"><span class="lang-my">မှတ်ချက် - ဒီ Affiliate Program စနစ်တစ်ခုဟာ နိုင်ငံတကာ စံနှုန်းနဲ့ စည်းမျဉ်းစည်းကမ်းကိုသာ အသုံးပြုထားပါတယ်။</span><span class="lang-en">Note: This Affiliate Program uses international standards and regulations.</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-16 text-gray-500 text-sm">
+            <p>&copy; 2025 Telegram E-commerce Bot. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const langSwitcher = document.getElementById('lang-switcher');
+            const body = document.body;
+
+            // Language switcher logic
+            langSwitcher.addEventListener('click', () => {
+                if (body.classList.contains('lang-my')) {
+                    body.classList.remove('lang-my');
+                    body.classList.add('lang-en');
+                    langSwitcher.textContent = 'မြန်မာ';
+                } else {
+                    body.classList.remove('lang-en');
+                    body.classList.add('lang-my');
+                    langSwitcher.textContent = 'English';
+                }
+            });
+
+            // Accordion logic
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const button = item.querySelector('.accordion-button');
+                button.addEventListener('click', () => {
+                    // Optional: close other accordions when one is opened
+                    // accordionItems.forEach(otherItem => {
+                    //     if (otherItem !== item) {
+                    //         otherItem.classList.remove('active');
+                    //     }
+                    // });
+                    item.classList.toggle('active');
+                });
+            });
+
+            // Scroll animation logic
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            const elementsToAnimate = document.querySelectorAll('.scroll-animate');
+            elementsToAnimate.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
+
